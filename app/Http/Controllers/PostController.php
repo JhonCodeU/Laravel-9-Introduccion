@@ -33,12 +33,13 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'slug' => 'required:unique:posts,slug',
             'body' => 'required',
         ]);
 
         $request->user()->posts()->create([
             'title' => $request->title,
-            'slug' => Str::slug($request->title),
+            'slug' => $request->slug,
             'body' => $request->body,
         ]);
 
@@ -50,12 +51,13 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'slug' => 'required:unique:posts,slug' . $post->id,
             'body' => 'required',
         ]);
 
         $post->update([
             'title' => $request->title,
-            'slug' => Str::slug($request->title),
+            'slug' => $request->slug,
             'body' => $request->body,
         ]);
 
