@@ -1,7 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight flex items-center justify-between">
             {{ __('Posts') }}
+
+            <a href="{{ route('posts.create') }}" class="bg-gray-800 text-white rounded px-4 py-2">
+                {{ __('Create new post') }}
+            </a>
         </h2>
     </x-slot>
 
@@ -16,11 +20,11 @@
                                 <td class="px-6 py-4">{{ $post->title }}</td>
                                 <td class="px-6 py-4">{{ $post->body }}</td>
                                 <td class="px-6 py-4">
-                                    <a href="{{ route('posts.edit', $post->id) }}"
+                                    <a href="{{ route('posts.edit', $post) }}"
                                         class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                    <form action="{{ route('posts.destroy', $post) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>

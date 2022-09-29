@@ -13,4 +13,22 @@ class PostController extends Controller
             'posts' => Post::Paginate(10)
         ]);
     }
+
+    public function create()
+    {
+        return view('posts.create');
+    }
+
+    public function edit(Post $post)
+    {
+        return view('posts.edit', [
+            'post' => $post
+        ]);
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return redirect()->route('posts.index');
+    }
 }
