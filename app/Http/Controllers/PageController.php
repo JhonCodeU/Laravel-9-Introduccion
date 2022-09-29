@@ -7,15 +7,14 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
-        return view('home');
-    }
-
-    public function blog()
-    {
-        $posts = Post::paginate(15);
-        return view('blog', ['posts' => $posts]);
+        $search = $request->query('search');
+        $posts = Post::query()
+            ->when($search, fn ($query, $search) => $query->where('title', 'like', "%$search%"))
+            ->orderByDesc('created_at')
+            ->paginate(10);
+        return view('home', compact('posts'));
     }
 
     public function post($slug)
